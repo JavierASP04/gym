@@ -1,0 +1,154 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/inter';
+@import '@fontsource-variable/space-grotesk';
+
+@custom-variant light (&:where(.light, .light *));
+
+:root {
+  --bg: #0a0c11;
+  --surface: #11141b;
+  --surface-2: #171b24;
+  --surface-3: #1f2430;
+  --line: #242a37;
+  --fg: #e9ecf3;
+  --muted: #8b93a7;
+  --accent: #c6f432;
+  --accent-fg: #11140a;
+  --accent-ink: #c6f432;
+  --ring: rgb(198 244 50 / 0.35);
+  --shadow: 0 1px 0 rgb(255 255 255 / 0.03) inset, 0 10px 30px -12px rgb(0 0 0 / 0.6);
+  color-scheme: dark;
+}
+
+.light {
+  --bg: #f4f5f7;
+  --surface: #ffffff;
+  --surface-2: #f3f4f7;
+  --surface-3: #e9ecf1;
+  --line: #e2e5eb;
+  --fg: #10131c;
+  --muted: #5f6779;
+  --accent: #c6f432;
+  --accent-fg: #11140a;
+  --accent-ink: #4d7c0f;
+  --ring: rgb(101 163 13 / 0.3);
+  --shadow: 0 1px 2px rgb(16 19 28 / 0.04), 0 8px 24px -14px rgb(16 19 28 / 0.18);
+  color-scheme: light;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-line: var(--line);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-fg: var(--accent-fg);
+  --color-accent-ink: var(--accent-ink);
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Space Grotesk Variable', 'Inter Variable', ui-sans-serif, sans-serif;
+  --shadow-card: var(--shadow);
+}
+
+@layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+  body {
+    @apply bg-bg text-fg font-sans antialiased;
+    font-feature-settings: 'cv11', 'ss01';
+  }
+  ::selection {
+    background: var(--accent);
+    color: var(--accent-fg);
+  }
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--surface-3) transparent;
+  }
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  input[type='date']::-webkit-calendar-picker-indicator {
+    filter: invert(0.6);
+  }
+}
+
+@utility tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+@utility field {
+  @apply h-10 w-full rounded-xl border border-line bg-surface-2 px-3 text-sm text-fg placeholder:text-muted/70 outline-none transition;
+  &:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px var(--ring);
+  }
+  &:disabled {
+    @apply opacity-60;
+  }
+}
+
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 rgb(198 244 50 / 0.5);
+  }
+  100% {
+    box-shadow: 0 0 0 14px rgb(198 244 50 / 0);
+  }
+}
+
+@utility animate-pop {
+  animation: pop-in 0.22s cubic-bezier(0.2, 0.9, 0.3, 1.2) both;
+}
+@utility animate-fade {
+  animation: fade-in 0.2s ease both;
+}
+@utility animate-pulse-ring {
+  animation: pulse-ring 1.8s ease-out infinite;
+}
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #print-area,
+  #print-area * {
+    visibility: visible;
+    color: #000 !important;
+  }
+  #print-area {
+    position: fixed;
+    inset: 0 auto auto 0;
+    width: 80mm;
+    border: 0 !important;
+    background: #fff !important;
+  }
+}
+
+.bg-grid {
+  background-image:
+    linear-gradient(to right, rgb(127 127 127 / 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(127 127 127 / 0.07) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
