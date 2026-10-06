@@ -1,0 +1,24 @@
+{
+  "name": "gym-system",
+  "private": true,
+  "version": "1.0.0",
+  "description": "IronPulse — sistema de gestión para gimnasios con conversión automática USD/Bs (BCV)",
+  "workspaces": [
+    "server",
+    "web"
+  ],
+  "scripts": {
+    "dev": "concurrently -k -n api,web -c cyan,magenta \"npm:dev -w server\" \"npm:dev -w web\"",
+    "build": "npm run build -w web && npm run build -w server",
+    "start": "npm run start -w server",
+    "seed": "npm run seed -w server",
+    "typecheck": "npm run typecheck -w server && npm run typecheck -w web",
+    "test": "npm run test -w server"
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.5"
+  },
+  "overrides": {
+    "shell-quote": "^1.12.0"
+  }
+}
